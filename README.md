@@ -37,9 +37,9 @@ or
 | > This is a blockquote.                              | &lt;blockquote>This is one blockquote.&lt;/blockquote>                                        | Blockquote                   |
 | - List item 1<br>- List item 2<br>- List item 3      | &lt;ul>&lt;li>List item 1&lt;/li>&lt;li>List item 2&lt;/li>&lt;li>List item 3&lt;/li>&lt;/ul> | Unordered list               |
 | 1. List item 1<br>2. List item 2<br>3. List item 3   | &lt;ol>&lt;li>List item 1&lt;/li>&lt;li>List item 2&lt;/li>&lt;li>List item 3&lt;/li>&lt;/ol> | Ordered list                 |
-| \| Column 1 \| Column 2 \|<br>\| Thing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \|Thingy&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \| | | Table               |
+| \| Column 1 \| Column 2 \|<br>\| Thing&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \| Thingy&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \| | | Table               |
 
 Other notes:
-- Heading id's default to what's in them, to lower case, with "-" instead of spaces.
+- Heading id's default to what's in the heading, to lower case, with "-" instead of spaces.
 - You can change the id of a heading by typing {#your-custom-id} after it (there must be a space between the heading and the opening curly brace)
 - Put a "+" after a link to make it open in a new tab, e.g. \[Link](https://example.com)+
