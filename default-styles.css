@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=STIX+Two+Text&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+body {
+    margin: 20px 30px 50px 30px;
+}
+
+*:not(code) {
+    font-family: -apple-system, "Inter", sans-serif;
+}
+
+h1 {
+    padding-bottom: 7px;
+    border-bottom: 2px solid #ddd;
+}
+
+h1, h2, h3 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+h1 + br, h2 + br, h3 + br {
+    display: none;
+}
+
+hr {
+    height: 2px;
+    border: none;
+    background-color: #ddd;
+}
+
+p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.math {
+    font-family: "STIX Two Text", serif;
+}
+
+.math sup {
+    font-family: "STIX Two Text", serif;
+}
+
+.math sub {
+    font-family: "STIX Two Text", serif;
+}
+
+blockquote {
+    border-left: 5px solid #ccc;
+    background-color: #f8f8f8;
+    padding: 10px 40px 10px 12px;
+    margin: 10px 15px 20px 20px;
+    display: inline-block;
+    min-width: 300px;
+}
+
+blockquote + br {
+    display: none;
+}
+
+ul, ol {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+img {
+    display: block;
+}
+
+.inline-code-block {
+    white-space: pre;
+    font-family: monospace;
+    background-color: #eee;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: 0.6px 4px 0.6px 4px;
+}
+
+.mlcb-container {
+    white-space: pre;
+    display: inline-block;
+    padding: 10px 35px 15px 18px;
+    border-radius: 7px;
+    border: 1px solid #ddd;
+    background-color: #eee;
+    min-width: 300px;
+}
+
+th, td {
+    white-space: pre;
+    margin: 0;
+    border: 1px solid darkgray !important;
+    padding: 6px 10px 6px 10px !important;
+}
+
+table {
+    border-collapse: collapse;
+}
