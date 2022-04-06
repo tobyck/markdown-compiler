@@ -7,9 +7,9 @@ function compile(md) {
                     .replace(/\*(.+?)\*/g, "<i>$1</i>")
                     .replace(/~~(.+?)~~/g, "<s>$1</s>")
                     .replace(/==(.+?)==/g, "<mark>$1</mark>")
-                    .replace(/\[(.+)\]\(([^ ]+?)\)\+/g, "<a href='$2' target='_blank'>$1</a>")
-                    .replace(/!\[(.*)\]\(([^ ]+?)\)/g, "<img src='$2' alt='$1'>")
-                    .replace(/\[(.+)\]\(([^ ]+?)\)/g, "<a href='$2'>$1</a>")
+                    .replace(/\[([^\]]+)\]\(([^ |\(\)]+?)\)\+/g, "<a href='$2' target='_blank'>$1</a>")
+                    .replace(/!\[([^\]]*)\]\(([^ |\(\)]+?)\)/g, "<img src='$2' alt='$1'>")
+                    .replace(/\[([^\]]+)\]\(([^ |\(\)]+?)\)/g, "<a href='$2'>$1</a>")
                     .replace(/\$(.+?)\$/g, "<span class='math'>$1</span>")
                     .replace(/\^(.+?)\^/g, "<sup>$1</sup>")
                     .replace(/~(.+?)~/g, "<sub>$1</sub>")
@@ -17,21 +17,12 @@ function compile(md) {
     }
 
     function endToken() {
-        if (state == "p") {
-            final += "</p>";
+        if (["p", "blockquote", "table"].includes(state) || (["ul", "ol"].includes(state) && !line.trim().length == 0)) {
+            final += `</${state}>`;
             state = null;
-        } else if (state == "blockquote") {
-            final += "</blockquote>"
-            state = null;
-        } else if (state == "ul") {
-            final += "</ul>"
-            state = null;
-        } else if (state == "ol") {
-            final += "</ol>"
-            state = null;
-        } else if (state == "table") {
-            final += "</table>"
-            state = null;
+            if (state == "blockquote") {
+                final += "<br>";
+            }
         }
     }
 
@@ -48,10 +39,14 @@ function compile(md) {
         if (line.trim().length == 0) {
             endToken();
             final += "<br>"
+        } else if (/^ +.+/.test(line) && state != "code") {
+            if (["ul", "ol"].includes(state)) {
+                final += "<p>" + compileParagraph(line.replace(/^ */, "")) + "</p>";
+            }
         } else if (/^ *-{3,} */.test(line)) {
             endToken();
             final += "<hr>"
-        } else if (/^ *#{1,3} *.+ *(\{#.+\})?/.test(line) && state == null) {
+        } else if (/^ *#{1,3} *.+ *(\{#.+\})?/.test(line) && state != "code") {
             endToken();
             var headingType = line.match(/(?<=^ *)#{1,3}/)[0].length,
                 id = line.match(/(?<= +\{#).+(?=\})/) || line.match(/(?<=# +).+/);
@@ -68,6 +63,7 @@ function compile(md) {
         } else if (/^ *> *.+/.test(line)) {
             if (state != "blockquote") {
                 endToken();
+
                 state = "blockquote";
                 final += "<blockquote>" + compileParagraph(line.replace(/^ *> */, ""));
             } else {
@@ -76,29 +72,32 @@ function compile(md) {
         } else if (/^ *- *.+/.test(line)) {
             if (state != "ul") {
                 endToken();
+
                 state = "ul"
                 final += "<ul>";
             }
             final += "<li>" + compileParagraph(line.replace(/^ *- */, "")) + "</li>";
-        } else if (/^ *\d+\. *.+/.test(line)) {
+        } else if (/^ *\d+\. *[^]+/.test(line)) {
             if (state != "ol") {
                 endToken();
+
                 state = "ol"
                 final += "<ol>";
             }
-            final += "<li>" + compileParagraph(line.replace(/^ *\d\. */, "")) + "</li>";
+            final += "<li>" + compileParagraph(line.replace(/^ *\d+\. */, "")) + "</li>";
         } else if (/^ *(\|.+)+\| *$/.test(line)) {
             if (state != "table") {
                 endToken();
+
                 state = "table";
-                var headers = line.split("|").slice(1, -1).map(header => header.replace(/^ /, "").replace(/ $/, ""));
+                var headers = line.split("|").slice(1, -1).map(header => compileParagraph(header.trim()));
                 final += "<table><thead>"
                 for (header of headers) {
                     final += `<th>${header}</th>`
                 }
                 final += "</thead>"
             } else {
-                var data = line.split("|").slice(1, -1).map(header => header.replace(/^ /, "").replace(/ $/, ""));
+                var data = line.split("|").slice(1, -1).map(header => compileParagraph(header.trim()));
                 final += "<tr>"
                 for (item of data) {
                     final += `<td>${item}</td>`
@@ -111,6 +110,7 @@ function compile(md) {
             } else if (state == "blockquote") {
                 endToken();
             } else {
+                endToken();
                 addParagraph();
             }
         }

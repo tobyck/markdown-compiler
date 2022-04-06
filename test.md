@@ -46,9 +46,15 @@ Unordered list:
 - Other thing
 - And another thing
 
+### test h3
+
 You can also do ordered ones:
 
 1. Mea tahi
+
+  With some stuff underneath
+  that's on a new lines.
+
 2. Mea rua
 3. Me ohomauri ohomauri... mea toru! 
 
