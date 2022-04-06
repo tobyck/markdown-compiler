@@ -55,7 +55,7 @@ function compile(md) {
             endToken();
             var headingType = line.match(/(?<=^ *)#{1,3}/)[0].length,
                 id = line.match(/(?<= +\{#).+(?=\})/) || line.match(/(?<=# +).+/);
-            final += `<h${headingType} id="${id[0].toLowerCase().trim().replace(/ /g, "-")}">${line.match(/(?<=#{1,3} ).+(?=\{?)/)[0].replace(/\{#.+\}/, "")}</h${headingType}>`;
+            final += `<h${headingType} id="${id[0].toLowerCase().trim().replace(/ /g, "-").replace(/[^\w]/g, "")}">${line.match(/(?<=#{1,3} ).+(?=\{?)/)[0].replace(/\{#.+\}/, "")}</h${headingType}>`;
         } else if (/^ *``` */.test(line)) {
             endToken();
             if (state != "code") {
