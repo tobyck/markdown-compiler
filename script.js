@@ -121,7 +121,7 @@ function compile(md) {
 
 var stylesheet = document.createElement("link");
 stylesheet.rel = "stylesheet";
-stylesheet.href = "default-styles.css";
+stylesheet.href = "https://modules.surge.sh/markdown-compiler/default-styles.css";
 document.head.appendChild(stylesheet);
 
 for (element of document.getElementsByTagName("markdown")) {
