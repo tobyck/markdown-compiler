@@ -1,7 +1,5 @@
 # Markdown Compiler
 
-This is my Markdown compiler which is basically a big mess of regular expressions and a tokeniser sort-of-a-thing.
-
 ## Instructions
 Link the script to your html file.
 ```html
