@@ -2,7 +2,7 @@
 
 This is my Markdown compiler which is basically a big mess of regular expressions and a tokeniser sort-of-a-thing.
 
-## Instructions
+## Usage
 Link the script to your html file.
 ```html
 <script src="modules.surge.sh/markdown-compiler/script.js"></script>
